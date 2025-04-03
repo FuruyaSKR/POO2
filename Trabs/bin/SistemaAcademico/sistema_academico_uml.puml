@@ -1,0 +1,103 @@
+@startuml SistemaAcademicoFinal
+
+enum SituacaoAlunoEnum {
+  APROVADO
+  REPROVADO_NOTA
+  REPROVADO_FREQUENCIA
+}
+
+class Aluno {
+  - id: int
+  - nome: String
+
+  + getSituacaoPorDisciplina(d: Disciplina): SituacaoAlunoEnum
+}
+
+class Curso {
+  - id: int
+  - nome: String
+  - fases: List<Fase>
+  - alunos: List<Aluno>
+  - matriculas: List<Matricula>
+
+  + adicionarAluno(a: Aluno)
+  + adicionarFase(f: Fase)
+  + listarDisciplinasPorFase(fase: int): List<Disciplina>
+  + ofertarDisciplina(d: Disciplina)
+  + matricularAluno(a: Aluno, d: Disciplina): Matricula
+}
+
+class Fase {
+  - numero: int
+  - nome: String
+  - disciplinas: List<Disciplina>
+
+  + adicionarDisciplina(d: Disciplina)
+  + listarDisciplinas(): List<Disciplina>
+}
+
+class Disciplina {
+  - id: int
+  - nome: String
+  - ofertada: boolean
+  - capacidadeMaxima: int
+  - professores: List<Professor>
+  - alunosMatriculados: List<Aluno>
+
+  + adicionarProfessor(p: Professor)
+  + listarProfessores(): List<Professor>
+  + temVaga(): boolean
+}
+
+class Professor {
+  - id: int
+  - nome: String
+
+  + registrarFrequencia(m: Matricula, data: LocalDate, presente: boolean)
+  + registrarAvaliacao(m: Matricula, nota: double)
+}
+
+class Matricula {
+  - aluno: Aluno
+  - disciplina: Disciplina
+  - situacaoFinal: SituacaoAlunoEnum
+  - frequencias: List<Frequencia>
+  - avaliacoes: List<Avaliacao>
+
+  + registrarFrequencia(f: Frequencia)
+  + registrarAvaliacao(a: Avaliacao)
+  + calcularMedia(): double
+  + calcularFrequencia(): double
+  + atualizarSituacao()
+}
+
+class Frequencia {
+  - data: LocalDate
+  - presente: boolean
+  - professorResponsavel: Professor
+}
+
+class Avaliacao {
+  - nota: double
+  - professorResponsavel: Professor
+}
+
+Curso "1" --> "1..*" Fase
+Fase "1" --> "1..*" Disciplina
+Curso "1" --> "0..*" Aluno
+Curso "1" --> "0..*" Matricula
+
+Disciplina "1" --> "1..4" Professor
+Professor "1" --> "0..*" Disciplina
+
+Disciplina "1" --> "0..*" Aluno
+
+Matricula "1" --> "1" Disciplina
+Aluno "1" <-- "0..*" Matricula
+
+Matricula "1" --> "0..*" Frequencia
+Matricula "1" --> "0..*" Avaliacao
+Frequencia "1" --> "1" Professor
+Avaliacao "1" --> "1" Professor
+
+@enduml
