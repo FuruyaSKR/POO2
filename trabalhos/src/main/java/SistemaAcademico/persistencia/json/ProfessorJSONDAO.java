@@ -2,14 +2,19 @@ package SistemaAcademico.persistencia.json;
 
 import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ProfessorJSONDAO implements IPersistencia<Professor> {
 
-    private static final String FILE_PATH = "professores.json";
-    private HashMap<Integer, Professor> banco = new HashMap<>();
+    private static final String FILE_PATH = "Saida/professores.xml";
+    private Map<Integer, Professor> banco = new HashMap<>();
+    private Gson gson = new Gson();
 
     public ProfessorJSONDAO() {
         carregar();
@@ -39,14 +44,12 @@ public class ProfessorJSONDAO implements IPersistencia<Professor> {
     }
 
     private void salvarEmArquivo() {
-        try (FileWriter writer = new FileWriter(FILE_PATH);
-                BufferedWriter bw = new BufferedWriter(writer)) {
-
-            for (Professor p : banco.values()) {
-                bw.write(p.getId() + ";" + p.getNome());
-                bw.newLine();
-            }
-
+        File diretorio = new File("Saida");
+        if (!diretorio.exists()) {
+            diretorio.mkdirs();
+        }
+        try (Writer writer = new FileWriter(FILE_PATH)) {
+            gson.toJson(banco, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,16 +60,17 @@ public class ProfessorJSONDAO implements IPersistencia<Professor> {
         if (!file.exists())
             return;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(";");
-                int id = Integer.parseInt(partes[0]);
-                String nome = partes[1];
-                banco.put(id, new Professor(id, nome));
+        try (Reader reader = new FileReader(file)) {
+            Type type = new TypeToken<Map<Integer, Professor>>() {
+            }.getType();
+            Map<Integer, Professor> dados = gson.fromJson(reader, type);
+            if (dados != null) {
+                banco = dados;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar JSON. O arquivo pode estar corrompido. Excluindo...");
+            file.delete();
         }
     }
+
 }
