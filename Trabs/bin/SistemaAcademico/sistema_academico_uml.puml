@@ -4,6 +4,7 @@ enum SituacaoAlunoEnum {
   APROVADO
   REPROVADO_NOTA
   REPROVADO_FREQUENCIA
+  REPROVADO_NOTA/FREQUENCIA
 }
 
 class Aluno {
