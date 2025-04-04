@@ -1,6 +1,8 @@
 package SistemaAcademico.classes;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Disciplina {
 
@@ -12,27 +14,38 @@ public class Disciplina {
     private List<Aluno> alunosMatriculados;
 
     public void adicionarProfessor(Professor professor) {
-        // TODO
+        if (professores.size() < 4 && !professores.contains(professor)) {
+            professores.add(professor);
+        } else {
+            System.out.println("Lotação de professores permitidos!");
+        }
+    }
+
+    public List<Aluno> listarAlunosMatriculados() {
+        return new ArrayList<>(alunosMatriculados);
     }
 
     public List<Professor> listarProfessores() {
-        // TODO
-        return null;
+        return new ArrayList<>(professores);
+    }
+
+    public void adicionarAluno(Aluno aluno) {
+        if (temVaga() && !alunosMatriculados.contains(aluno)) {
+            alunosMatriculados.add(aluno);
+        }
     }
 
     public boolean temVaga() {
-        // TODO
-        return false;
+        return alunosMatriculados.size() < capacidadeMaxima;
     }
 
-    public Disciplina(int id, String nome, boolean ofertada, int capacidadeMaxima, List<Professor> professores,
-            List<Aluno> alunosMatriculados) {
+    public Disciplina(int id, String nome, boolean ofertada) {
         this.id = id;
         this.nome = nome;
         this.ofertada = ofertada;
-        this.capacidadeMaxima = capacidadeMaxima;
-        this.professores = professores;
-        this.alunosMatriculados = alunosMatriculados;
+        this.capacidadeMaxima = 0;
+        this.professores = new ArrayList<>();
+        this.alunosMatriculados = new ArrayList<>();
     }
 
     public int getId() {
@@ -52,7 +65,7 @@ public class Disciplina {
     }
 
     public boolean isOfertada() {
-        return this.ofertada;
+        return ofertada;
     }
 
     public boolean getOfertada() {
@@ -85,6 +98,21 @@ public class Disciplina {
 
     public void setAlunosMatriculados(List<Aluno> alunosMatriculados) {
         this.alunosMatriculados = alunosMatriculados;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Disciplina that = (Disciplina) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }

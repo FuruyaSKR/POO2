@@ -24,9 +24,7 @@ CREATE TABLE Aluno (
 CREATE TABLE Fase (
     id INT PRIMARY KEY AUTO_INCREMENT,
     numero INT NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    curso_id INT NOT NULL,
-    FOREIGN KEY (curso_id) REFERENCES Curso(id)
+    nome VARCHAR(100) NOT NULL
 );
 
 -- Tabela de Disciplinas
@@ -34,9 +32,16 @@ CREATE TABLE Disciplina (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     ofertada BOOLEAN NOT NULL,
-    capacidadeMaxima INT NOT NULL,
+    capacidadeMaxima INT NOT NULL
+);
+
+-- Tabela associativa entre Fase e Disciplina
+CREATE TABLE Fase_Disciplina (
     fase_id INT NOT NULL,
-    FOREIGN KEY (fase_id) REFERENCES Fase(id)
+    disciplina_id INT NOT NULL,
+    PRIMARY KEY (fase_id, disciplina_id),
+    FOREIGN KEY (fase_id) REFERENCES Fase(id),
+    FOREIGN KEY (disciplina_id) REFERENCES Disciplina(id)
 );
 
 -- Tabela de Professores
@@ -44,6 +49,16 @@ CREATE TABLE Professor (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
 );
+
+-- Relacionamento N:N entre Disciplina e Aluno
+CREATE TABLE Disciplina_Aluno (
+    disciplina_id INT,
+    aluno_id INT,
+    PRIMARY KEY (disciplina_id, aluno_id),
+    FOREIGN KEY (disciplina_id) REFERENCES Disciplina(id),
+    FOREIGN KEY (aluno_id) REFERENCES Aluno(id)
+);
+
 
 -- Relacionamento N:N entre Disciplina e Professor
 CREATE TABLE Disciplina_Professor (

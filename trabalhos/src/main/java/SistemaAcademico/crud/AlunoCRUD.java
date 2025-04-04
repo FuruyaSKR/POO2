@@ -3,7 +3,6 @@ package SistemaAcademico.crud;
 import java.util.List;
 
 import SistemaAcademico.classes.Aluno;
-import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 
 public class AlunoCRUD {

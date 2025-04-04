@@ -1,5 +1,6 @@
 package SistemaAcademico.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fase {
@@ -9,18 +10,19 @@ public class Fase {
     private List<Disciplina> disciplinas;
 
     public void adicionarDisciplina(Disciplina disciplina) {
-        // TODO
+        if (disciplina != null && !disciplinas.contains(disciplina)) {
+            disciplinas.add(disciplina);
+        }
     }
 
     public List<Disciplina> listarDisciplinas() {
-        // TODO
-        return null;
+        return new ArrayList<>(disciplinas);
     }
 
-    public Fase(int numero, String nome, List<Disciplina> disciplinas) {
+    public Fase(int numero, String nome) {
         this.numero = numero;
         this.nome = nome;
-        this.disciplinas = disciplinas;
+        this.disciplinas = new ArrayList<>();
     }
 
     public int getNumero() {

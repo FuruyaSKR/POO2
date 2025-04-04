@@ -1,7 +1,6 @@
 package SistemaAcademico.persistencia.mysql;
 
 import SistemaAcademico.classes.Aluno;
-import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 
 import java.sql.*;

@@ -1,5 +1,7 @@
 package SistemaAcademico.classes;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Curso {
@@ -11,33 +13,49 @@ public class Curso {
     private List<Matricula> matriculas;
 
     public void adicionarAluno(Aluno aluno) {
-        // TODO
+        if (aluno != null && !alunos.contains(aluno)) {
+            alunos.add(aluno);
+        }
     }
 
     public void adicionarFase(Fase fase) {
-        // TODO
+        if (fase != null && !fases.contains(fase)) {
+            fases.add(fase);
+        }
     }
 
-    public List<Disciplina> listarDisciplinasPorFase(int fase) {
-        // TODO
-        return null;
+    public List<Disciplina> listarDisciplinasPorFase(int numeroFase) {
+        for (Fase f : fases) {
+            if (f.getNumero() == numeroFase) {
+                return f.listarDisciplinas();
+            }
+        }
+        return Collections.emptyList();
     }
 
     public void ofertarDisciplina(Disciplina disciplina) {
-        // TODO
+        if (disciplina != null) {
+            disciplina.setOfertada(true);
+        }
     }
 
-    public Matricula matricularAluno(Aluno aluno, Disciplina disciplina) {
-        // TODO
-        return null;
-    }
+    // TODO Arrumar
+    // public Matricula matricularAluno(Aluno aluno, Disciplina disciplina) {
+    // if (aluno != null && disciplina != null && disciplina.temVaga()) {
+    // disciplina.adicionarAluno(aluno);
+    // Matricula matricula = new Matricula(aluno, disciplina);
+    // matriculas.add(matricula);
+    // return matricula;
+    // }
+    // return null;
+    // }
 
-    public Curso(int id, String nome, List<Fase> fases, List<Aluno> alunos, List<Matricula> matriculas) {
+    public Curso(int id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.fases = fases;
-        this.alunos = alunos;
-        this.matriculas = matriculas;
+        this.fases = new ArrayList<>();
+        this.alunos = new ArrayList<>();
+        this.matriculas = new ArrayList<>();
     }
 
     public int getId() {

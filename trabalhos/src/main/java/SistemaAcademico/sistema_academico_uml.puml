@@ -47,6 +47,7 @@ class Disciplina {
 
   + adicionarProfessor(p: Professor)
   + listarProfessores(): List<Professor>
+  + listarAlunosMatriculados(): List<Alunos>
   + temVaga(): boolean
 }
 

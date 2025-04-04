@@ -74,7 +74,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
     @Override
     public List<Professor> listarTodos() {
         List<Professor> lista = new ArrayList<>();
-        String sql = "SELECT * FROM professores";
+        String sql = "SELECT * FROM professor";
 
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();

@@ -1,7 +1,6 @@
 package SistemaAcademico.persistencia.xml;
 
 import SistemaAcademico.classes.Aluno;
-import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 
 import org.w3c.dom.*;
