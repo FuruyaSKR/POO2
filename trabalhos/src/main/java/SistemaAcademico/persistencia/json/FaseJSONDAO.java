@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class FaseJSONDAO implements IPersistencia<Fase> {
-    private static final String FILE_PATH = "saida/fases.json";
+    private static final String FILE_PATH = "Saida/fases.json";
     private final Gson gson = new Gson();
     private Map<Integer, Fase> mapa = new HashMap<>();
 

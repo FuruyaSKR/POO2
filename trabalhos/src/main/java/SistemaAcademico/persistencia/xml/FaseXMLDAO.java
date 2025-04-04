@@ -8,7 +8,6 @@ import SistemaAcademico.persistencia.IPersistencia;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -19,7 +18,7 @@ import java.io.File;
 import java.util.*;
 
 public class FaseXMLDAO implements IPersistencia<Fase> {
-    private static final String FILE_PATH = "saida/fases.xml";
+    private static final String FILE_PATH = "Saida/fases.xml";
     private final Map<Integer, Fase> mapa = new HashMap<>();
 
     @Override

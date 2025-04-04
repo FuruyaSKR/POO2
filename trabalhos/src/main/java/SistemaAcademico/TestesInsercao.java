@@ -3,10 +3,12 @@ package SistemaAcademico;
 import java.util.List;
 
 import SistemaAcademico.classes.Aluno;
+import SistemaAcademico.classes.Curso;
 import SistemaAcademico.classes.Disciplina;
 import SistemaAcademico.classes.Fase;
 import SistemaAcademico.classes.Professor;
 import SistemaAcademico.crud.AlunoCRUD;
+import SistemaAcademico.crud.CursoCRUD;
 import SistemaAcademico.crud.DisciplinaCRUD;
 import SistemaAcademico.crud.FaseCRUD;
 import SistemaAcademico.crud.ProfessorCRUD;
@@ -51,6 +53,26 @@ public class TestesInsercao {
 
         return List.of(d1, d2, d3, d4);
     }
+
+    public static List<Curso> criarCursos(List<Fase> fases, List<Aluno> alunos, List<Disciplina> disciplinas) {
+        Curso curso1 = new Curso(1, "Ciência da Computação");
+
+        for (Fase f : fases) {
+            curso1.adicionarFase(f);
+        }
+
+        for (Aluno a : alunos) {
+            curso1.adicionarAluno(a);
+        }
+
+        for (Disciplina d : disciplinas) {
+            curso1.ofertarDisciplina(d);
+        }
+
+        return List.of(curso1);
+    }
+
+    // --------------------------------------------------------------------------------------------------------------------
 
     public static void testarProfessores(ProfessorCRUD professorCRUD, List<Professor> professores) {
         System.out.println("----- Testando Professores -----");
@@ -137,6 +159,22 @@ public class TestesInsercao {
         System.out.println("\nListando todas as fases após operações:");
         for (Fase f : faseCRUD.listarTodasFases()) {
             System.out.println(f.getNumero() + " - " + f.getNome());
+        }
+    }
+
+    public static void testarCursos(CursoCRUD cursoCRUD, List<Curso> cursos) {
+        System.out.println("\n----- Testando Cursos -----");
+
+        for (Curso c : cursos) {
+            cursoCRUD.salvarCurso(c);
+        }
+
+        for (Curso c : cursoCRUD.listarTodosCursos()) {
+            System.out.println("Curso: " + c.getNome());
+            System.out.println("Fases: " + c.getFases().size());
+            System.out.println("Disciplinas ofertadas: " + c.getFases().stream()
+                    .flatMap(f -> f.listarDisciplinas().stream())
+                    .filter(Disciplina::isOfertada).count());
         }
     }
 

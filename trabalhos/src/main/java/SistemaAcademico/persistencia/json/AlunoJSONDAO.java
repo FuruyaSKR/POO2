@@ -1,7 +1,6 @@
 package SistemaAcademico.persistencia.json;
 
 import SistemaAcademico.classes.Aluno;
-import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

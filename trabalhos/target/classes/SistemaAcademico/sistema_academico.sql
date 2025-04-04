@@ -3,7 +3,7 @@ USE sistema_academico;
 
 -- Enum para situação do aluno
 CREATE TABLE SituacaoAlunoEnum (
-    situacao ENUM('APROVADO', 'REPROVADO_NOTA', 'REPROVADO_FREQUENCIA', 'REPROVADO_NOTA/FREQUENCIA') PRIMARY KEY
+    situacao ENUM('APROVADO', 'REPROVADO', 'MATRICULADO') PRIMARY KEY
 );
 
 -- Tabela de Cursos

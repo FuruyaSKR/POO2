@@ -2,42 +2,36 @@ package SistemaAcademico;
 
 import java.util.List;
 import java.util.Scanner;
-import SistemaAcademico.persistencia.IPersistencia;
 
 import SistemaAcademico.classes.Aluno;
+import SistemaAcademico.classes.Curso;
 import SistemaAcademico.classes.Disciplina;
 import SistemaAcademico.classes.Fase;
 import SistemaAcademico.classes.Professor;
 
 import SistemaAcademico.crud.AlunoCRUD;
+import SistemaAcademico.crud.CursoCRUD;
 import SistemaAcademico.crud.DisciplinaCRUD;
 import SistemaAcademico.crud.FaseCRUD;
 import SistemaAcademico.crud.ProfessorCRUD;
 
-import SistemaAcademico.persistencia.json.AlunoJSONDAO;
-import SistemaAcademico.persistencia.json.DisciplinaJSONDAO;
-import SistemaAcademico.persistencia.json.FaseJSONDAO;
-import SistemaAcademico.persistencia.json.ProfessorJSONDAO;
-
-import SistemaAcademico.persistencia.mysql.AlunoMySQLDAO;
-import SistemaAcademico.persistencia.mysql.DisciplinaMySQLDAO;
-import SistemaAcademico.persistencia.mysql.FaseMySQLDAO;
-import SistemaAcademico.persistencia.mysql.ProfessorMySQLDAO;
-
-import SistemaAcademico.persistencia.xml.AlunoXMLDAO;
-import SistemaAcademico.persistencia.xml.DisciplinaXMLDAO;
-import SistemaAcademico.persistencia.xml.FaseXMLDAO;
-import SistemaAcademico.persistencia.xml.ProfessorXMLDAO;
+import SistemaAcademico.persistencia.IPersistencia;
+import SistemaAcademico.persistencia.json.*;
+import SistemaAcademico.persistencia.mysql.*;
+import SistemaAcademico.persistencia.xml.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         IPersistencia<Professor> professorDAO = null;
         IPersistencia<Aluno> alunoDAO = null;
         IPersistencia<Disciplina> disciplinaDAO = null;
         IPersistencia<Fase> faseDAO = null;
+        IPersistencia<Curso> cursoDAO = null;
 
-        while (professorDAO == null || alunoDAO == null || disciplinaDAO == null || faseDAO == null) {
+        boolean persistenciaSelecionada = false;
+        while (!persistenciaSelecionada) {
             System.out.println("Escolha o tipo de persistência:");
             System.out.println("1 - JSON");
             System.out.println("2 - XML");
@@ -51,18 +45,24 @@ public class Main {
                     alunoDAO = new AlunoJSONDAO();
                     disciplinaDAO = new DisciplinaJSONDAO();
                     faseDAO = new FaseJSONDAO();
+                    cursoDAO = new CursoJSONDAO();
+                    persistenciaSelecionada = true;
                     break;
                 case "2":
                     professorDAO = new ProfessorXMLDAO();
                     alunoDAO = new AlunoXMLDAO();
                     disciplinaDAO = new DisciplinaXMLDAO();
                     faseDAO = new FaseXMLDAO();
+                    cursoDAO = new CursoXMLDAO();
+                    persistenciaSelecionada = true;
                     break;
                 case "3":
                     professorDAO = new ProfessorMySQLDAO();
                     alunoDAO = new AlunoMySQLDAO();
                     disciplinaDAO = new DisciplinaMySQLDAO();
                     faseDAO = new FaseMySQLDAO();
+                    cursoDAO = new CursoMySQLDAO();
+                    persistenciaSelecionada = true;
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.\n");
@@ -76,6 +76,7 @@ public class Main {
         AlunoCRUD alunoCRUD = new AlunoCRUD(alunoDAO);
         DisciplinaCRUD disciplinaCRUD = new DisciplinaCRUD(disciplinaDAO);
         FaseCRUD faseCRUD = new FaseCRUD(faseDAO);
+        CursoCRUD cursoCRUD = new CursoCRUD(cursoDAO);
 
         // CRIAR OS DADOS
         List<Professor> professores = TestesInsercao.criarProfessores();
@@ -87,5 +88,9 @@ public class Main {
         TestesInsercao.testarAlunos(alunoCRUD, alunos);
         TestesInsercao.testarDisciplinas(disciplinaCRUD, disciplinas);
         TestesInsercao.testarFases(faseCRUD, disciplinas);
+
+        List<Fase> fases = faseCRUD.listarTodasFases();
+        List<Curso> cursos = TestesInsercao.criarCursos(fases, alunos, disciplinas);
+        TestesInsercao.testarCursos(cursoCRUD, cursos);
     }
 }

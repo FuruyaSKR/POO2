@@ -1,5 +1,6 @@
 package SistemaAcademico.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Matricula {
@@ -11,34 +12,52 @@ public class Matricula {
     private List<Avaliacao> avaliacoes;
 
     public void registrarFrequencia(Frequencia frequencia) {
-        // TODO
+        if (frequencia != null) {
+            frequencias.add(frequencia);
+        }
     }
 
     public void registrarAvaliacao(Avaliacao avaliacao) {
-        // TODO
+        if (avaliacao != null) {
+            avaliacoes.add(avaliacao);
+        }
     }
 
     public double calcularMedia() {
-        // TODO
-        return 0.0;
+        if (avaliacoes.isEmpty())
+            return 0.0;
+        double soma = 0.0;
+        for (Avaliacao a : avaliacoes) {
+            soma += a.getNota();
+        }
+        return soma / avaliacoes.size();
     }
 
     public double calcularFrequencia() {
-        // TODO
-        return 0.0;
+        if (frequencias.isEmpty())
+            return 0.0;
+        int totalAulas = frequencias.size();
+        long presencas = frequencias.stream().filter(Frequencia::isPresente).count();
+        return (presencas * 100.0) / totalAulas;
     }
 
     public void atualizarSituacao() {
-        // TODO
+        double media = calcularMedia();
+        double freq = calcularFrequencia();
+
+        if (media >= 6.0 && freq >= 75.0) {
+            situacaoFinal = SituacaoAlunoEnum.APROVADO;
+        } else {
+            situacaoFinal = SituacaoAlunoEnum.REPROVADO;
+        }
     }
 
-    public Matricula(Aluno aluno, Disciplina disciplina, SituacaoAlunoEnum situacaoFinal, List<Frequencia> frequencias,
-            List<Avaliacao> avaliacoes) {
+    public Matricula(Aluno aluno, Disciplina disciplina) {
         this.aluno = aluno;
         this.disciplina = disciplina;
-        this.situacaoFinal = situacaoFinal;
-        this.frequencias = frequencias;
-        this.avaliacoes = avaliacoes;
+        this.frequencias = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();
+        this.situacaoFinal = SituacaoAlunoEnum.MATRICULADO;
     }
 
     public Aluno getAluno() {
