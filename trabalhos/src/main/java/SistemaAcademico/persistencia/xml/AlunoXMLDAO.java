@@ -1,5 +1,6 @@
 package SistemaAcademico.persistencia.xml;
 
+import SistemaAcademico.classes.Aluno;
 import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 
@@ -15,29 +16,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProfessorXMLDAO implements IPersistencia<Professor> {
+public class AlunoXMLDAO implements IPersistencia<Aluno> {
 
-    private static final String FILE_PATH = "Saida/professores.xml";
-    private Map<Integer, Professor> banco = new HashMap<>();
+    private static final String FILE_PATH = "saida/alunos.xml";
+    private Map<Integer, Aluno> banco = new HashMap<>();
 
-    public ProfessorXMLDAO() {
+    public AlunoXMLDAO() {
         carregar();
     }
 
     @Override
-    public void salvar(Professor professor) {
-        banco.put(professor.getId(), professor);
+    public void salvar(Aluno aluno) {
+        banco.put(aluno.getId(), aluno);
         salvarEmArquivo();
     }
 
     @Override
-    public Professor buscarPorId(int id) {
+    public Aluno buscarPorId(int id) {
         return banco.get(id);
     }
 
     @Override
-    public void atualizar(Professor professor) {
-        banco.put(professor.getId(), professor);
+    public void atualizar(Aluno aluno) {
+        banco.put(aluno.getId(), aluno);
         salvarEmArquivo();
     }
 
@@ -48,35 +49,35 @@ public class ProfessorXMLDAO implements IPersistencia<Professor> {
     }
 
     @Override
-    public List<Professor> listarTodos() {
+    public List<Aluno> listarTodos() {
         return new ArrayList<>(banco.values());
     }
 
     private void salvarEmArquivo() {
-        File diretorio = new File("Saida");
-        if (!diretorio.exists()) {
-            diretorio.mkdirs();
-        }
         try {
+            File dir = new File("saida");
+            if (!dir.exists())
+                dir.mkdirs();
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.newDocument();
 
-            Element root = doc.createElement("professores");
+            Element root = doc.createElement("alunos");
             doc.appendChild(root);
 
-            for (Professor p : banco.values()) {
-                Element profElem = doc.createElement("professor");
+            for (Aluno a : banco.values()) {
+                Element alunoElem = doc.createElement("aluno");
 
                 Element idElem = doc.createElement("id");
-                idElem.appendChild(doc.createTextNode(String.valueOf(p.getId())));
+                idElem.appendChild(doc.createTextNode(String.valueOf(a.getId())));
 
                 Element nomeElem = doc.createElement("nome");
-                nomeElem.appendChild(doc.createTextNode(p.getNome()));
+                nomeElem.appendChild(doc.createTextNode(a.getNome()));
 
-                profElem.appendChild(idElem);
-                profElem.appendChild(nomeElem);
-                root.appendChild(profElem);
+                alunoElem.appendChild(idElem);
+                alunoElem.appendChild(nomeElem);
+                root.appendChild(alunoElem);
             }
 
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -98,18 +99,14 @@ public class ProfessorXMLDAO implements IPersistencia<Professor> {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = builder.parse(file);
-            NodeList nodeList = doc.getElementsByTagName("professor");
+            NodeList nodeList = doc.getElementsByTagName("aluno");
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element e = (Element) node;
-                    int id = Integer.parseInt(e.getElementsByTagName("id").item(0).getTextContent());
-                    String nome = e.getElementsByTagName("nome").item(0).getTextContent();
-                    banco.put(id, new Professor(id, nome));
-                }
+                Element e = (Element) nodeList.item(i);
+                int id = Integer.parseInt(e.getElementsByTagName("id").item(0).getTextContent());
+                String nome = e.getElementsByTagName("nome").item(0).getTextContent();
+                banco.put(id, new Aluno(id, nome));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

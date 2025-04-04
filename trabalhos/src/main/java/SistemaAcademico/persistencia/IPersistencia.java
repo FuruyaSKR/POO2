@@ -1,5 +1,7 @@
 package SistemaAcademico.persistencia;
 
+import java.util.List;
+
 public interface IPersistencia<T> {
     void salvar(T entidade);
 
@@ -8,4 +10,7 @@ public interface IPersistencia<T> {
     void atualizar(T entidade);
 
     void deletar(int id);
+
+    List<T> listarTodos();
+
 }

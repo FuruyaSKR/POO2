@@ -1,5 +1,7 @@
 package SistemaAcademico.crud;
 
+import java.util.List;
+
 import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 
@@ -26,4 +28,9 @@ public class ProfessorCRUD {
     public void deletarProfessor(int id) {
         persistencia.deletar(id);
     }
+
+    public List<Professor> listarTodosProfessores() {
+        return persistencia.listarTodos();
+    }
+
 }

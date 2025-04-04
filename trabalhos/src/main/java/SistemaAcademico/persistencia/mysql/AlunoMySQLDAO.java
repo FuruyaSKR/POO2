@@ -1,5 +1,6 @@
 package SistemaAcademico.persistencia.mysql;
 
+import SistemaAcademico.classes.Aluno;
 import SistemaAcademico.classes.Professor;
 import SistemaAcademico.persistencia.IPersistencia;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfessorMySQLDAO implements IPersistencia<Professor> {
+public class AlunoMySQLDAO implements IPersistencia<Aluno> {
 
     private static final String URL = "jdbc:mysql://localhost:3306/sistema_academico";
     private static final String USER = "root";
@@ -18,12 +19,12 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
     }
 
     @Override
-    public void salvar(Professor professor) {
-        String sql = "INSERT INTO professor (id, nome) VALUES (?, ?)";
+    public void salvar(Aluno aluno) {
+        String sql = "INSERT INTO aluno (id, nome) VALUES (?, ?)";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, professor.getId());
-            stmt.setString(2, professor.getNome());
+            stmt.setInt(1, aluno.getId());
+            stmt.setString(2, aluno.getNome());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,14 +32,14 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
     }
 
     @Override
-    public Professor buscarPorId(int id) {
-        String sql = "SELECT * FROM professor WHERE id = ?";
+    public Aluno buscarPorId(int id) {
+        String sql = "SELECT * FROM aluno WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Professor(rs.getInt("id"), rs.getString("nome"));
+                return new Aluno(rs.getInt("id"), rs.getString("nome"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,12 +48,12 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
     }
 
     @Override
-    public void atualizar(Professor professor) {
-        String sql = "UPDATE professor SET nome = ? WHERE id = ?";
+    public void atualizar(Aluno aluno) {
+        String sql = "UPDATE aluno SET nome = ? WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, professor.getNome());
-            stmt.setInt(2, professor.getId());
+            stmt.setString(1, aluno.getNome());
+            stmt.setInt(2, aluno.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,7 +62,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
 
     @Override
     public void deletar(int id) {
-        String sql = "DELETE FROM professor WHERE id = ?";
+        String sql = "DELETE FROM aluno WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -72,15 +73,15 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
     }
 
     @Override
-    public List<Professor> listarTodos() {
-        List<Professor> lista = new ArrayList<>();
-        String sql = "SELECT * FROM professores";
+    public List<Aluno> listarTodos() {
+        List<Aluno> lista = new ArrayList<>();
+        String sql = "SELECT * FROM aluno";
 
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                lista.add(new Professor(rs.getInt("id"), rs.getString("nome")));
+                lista.add(new Aluno(rs.getInt("id"), rs.getString("nome")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
