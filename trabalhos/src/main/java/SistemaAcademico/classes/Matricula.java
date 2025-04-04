@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Matricula {
-
+    private int id;
     private Aluno aluno;
     private Disciplina disciplina;
     private SituacaoAlunoEnum situacaoFinal;
     private List<Frequencia> frequencias;
     private List<Avaliacao> avaliacoes;
+    private Curso curso;
 
     public void registrarFrequencia(Frequencia frequencia) {
         if (frequencia != null) {
@@ -52,12 +53,22 @@ public class Matricula {
         }
     }
 
-    public Matricula(Aluno aluno, Disciplina disciplina) {
+    public Matricula(int id, Aluno aluno, Disciplina disciplina, Curso curso) {
+        this.id = id;
         this.aluno = aluno;
         this.disciplina = disciplina;
+        this.curso = curso;
         this.frequencias = new ArrayList<>();
         this.avaliacoes = new ArrayList<>();
         this.situacaoFinal = SituacaoAlunoEnum.MATRICULADO;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Aluno getAluno() {
@@ -98,6 +109,14 @@ public class Matricula {
 
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+
+    public Curso getCurso() {
+        return this.curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
 }

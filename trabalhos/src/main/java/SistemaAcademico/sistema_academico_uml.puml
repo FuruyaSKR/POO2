@@ -60,6 +60,7 @@ class Professor {
 
 class Matricula {
   - aluno: Aluno
+  - curso: Curso
   - disciplina: Disciplina
   - situacaoFinal: SituacaoAlunoEnum
   - frequencias: List<Frequencia>

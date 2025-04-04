@@ -7,14 +7,33 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class CursoJSONDAO implements IPersistencia<Curso> {
     private static final String FILE_PATH = "Saida/cursos.json";
     private final Map<Integer, Curso> mapa = new HashMap<>();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new com.google.gson.JsonDeserializer<LocalDate>() {
+                @Override
+                public LocalDate deserialize(com.google.gson.JsonElement json, java.lang.reflect.Type typeOfT,
+                        com.google.gson.JsonDeserializationContext context) {
+                    return LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE);
+                }
+            })
+            .registerTypeAdapter(LocalDate.class, new com.google.gson.JsonSerializer<LocalDate>() {
+                @Override
+                public com.google.gson.JsonElement serialize(LocalDate date, java.lang.reflect.Type type,
+                        com.google.gson.JsonSerializationContext context) {
+                    return new com.google.gson.JsonPrimitive(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
+                }
+            })
+            .setPrettyPrinting()
+            .create();
 
     public CursoJSONDAO() {
         carregarArquivo();

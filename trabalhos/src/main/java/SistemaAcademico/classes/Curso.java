@@ -34,8 +34,9 @@ public class Curso {
     }
 
     public void ofertarDisciplina(Disciplina disciplina) {
-        if (disciplina != null) {
-            disciplina.setOfertada(true);
+        for (Fase f : fases) {
+            f.adicionarDisciplina(disciplina);
+            break;
         }
     }
 

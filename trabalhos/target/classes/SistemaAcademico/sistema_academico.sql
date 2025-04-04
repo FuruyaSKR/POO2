@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS sistema_academico;
+DROP DATABASE IF EXISTS sistema_academico;
+CREATE DATABASE sistema_academico;
 USE sistema_academico;
 
 -- Enum para situação do aluno
@@ -12,12 +13,10 @@ CREATE TABLE Curso (
     nome VARCHAR(100) NOT NULL
 );
 
--- Tabela de Alunos
+-- Tabela de Alunos (sem vínculo direto com Curso)
 CREATE TABLE Aluno (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    curso_id INT,
-    FOREIGN KEY (curso_id) REFERENCES Curso(id)
+    nome VARCHAR(100) NOT NULL
 );
 
 -- Tabela de Fases
@@ -25,6 +24,15 @@ CREATE TABLE Fase (
     id INT PRIMARY KEY AUTO_INCREMENT,
     numero INT NOT NULL,
     nome VARCHAR(100) NOT NULL
+);
+
+-- Associação Curso-Fase
+CREATE TABLE Curso_Fase (
+    curso_id INT NOT NULL,
+    fase_id INT NOT NULL,
+    PRIMARY KEY (curso_id, fase_id),
+    FOREIGN KEY (curso_id) REFERENCES Curso(id),
+    FOREIGN KEY (fase_id) REFERENCES Fase(id)
 );
 
 -- Tabela de Disciplinas
@@ -59,7 +67,6 @@ CREATE TABLE Disciplina_Aluno (
     FOREIGN KEY (aluno_id) REFERENCES Aluno(id)
 );
 
-
 -- Relacionamento N:N entre Disciplina e Professor
 CREATE TABLE Disciplina_Professor (
     disciplina_id INT,
@@ -75,7 +82,7 @@ CREATE TABLE Matricula (
     aluno_id INT NOT NULL,
     disciplina_id INT NOT NULL,
     curso_id INT NOT NULL,
-    situacaoFinal ENUM('APROVADO', 'REPROVADO_NOTA', 'REPROVADO_FREQUENCIA', 'REPROVADO_NOTA/FREQUENCIA'),
+    situacaoFinal ENUM('APROVADO', 'REPROVADO', 'MATRICULADO'),
     FOREIGN KEY (aluno_id) REFERENCES Aluno(id),
     FOREIGN KEY (disciplina_id) REFERENCES Disciplina(id),
     FOREIGN KEY (curso_id) REFERENCES Curso(id)
