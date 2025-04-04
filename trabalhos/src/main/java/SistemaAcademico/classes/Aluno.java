@@ -1,16 +1,10 @@
 package SistemaAcademico.classes;
 
-import java.util.List;
-
 public class Aluno {
 
 	private int id;
 	private String nome;
-
-	public SituacaoAlunoEnum getSituacaoPorDisciplina(Disciplina disciplina) {
-		// TODO
-		return null;
-	}
+	private Curso curso;
 
 	public Aluno(int id, String nome) {
 		this.id = id;
@@ -31,6 +25,14 @@ public class Aluno {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public Curso getCurso() {
+		return curso;
 	}
 
 }

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<matriculas>
+    <matricula>
+        <id>1</id>
+        <aluno_id>2</aluno_id>
+        <disciplina_id>1</disciplina_id>
+        <curso>
+            <id>1</id>
+            <nome>Ciência da Computação</nome>
+        </curso>
+        <situacaoFinal>REPROVADO</situacaoFinal>
+        <avaliacoes>
+            <avaliacao>
+                <nota>6.328176365162776</nota>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </avaliacao>
+            <avaliacao>
+                <nota>9.148392289070888</nota>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </avaliacao>
+            <avaliacao>
+                <nota>9.424801834847976</nota>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </avaliacao>
+        </avaliacoes>
+        <frequencias>
+            <frequencia>
+                <data>2025-04-04</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-04-03</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-04-02</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-04-01</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-31</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-30</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-29</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-28</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-27</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-26</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+        </frequencias>
+    </matricula>
+    <matricula>
+        <id>2</id>
+        <aluno_id>3</aluno_id>
+        <disciplina_id>2</disciplina_id>
+        <curso>
+            <id>1</id>
+            <nome>Ciência da Computação</nome>
+        </curso>
+        <situacaoFinal>APROVADO</situacaoFinal>
+        <avaliacoes>
+            <avaliacao>
+                <nota>7.8214193644353</nota>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </avaliacao>
+            <avaliacao>
+                <nota>5.304233238964521</nota>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </avaliacao>
+            <avaliacao>
+                <nota>7.782951370865587</nota>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </avaliacao>
+        </avaliacoes>
+        <frequencias>
+            <frequencia>
+                <data>2025-04-04</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-04-03</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-04-02</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-04-01</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-31</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-30</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-29</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-28</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-27</data>
+                <presente>true</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+            <frequencia>
+                <data>2025-03-26</data>
+                <presente>false</presente>
+                <professor>
+                    <id>2</id>
+                    <nome>Carlos Souza Atualizado</nome>
+                </professor>
+            </frequencia>
+        </frequencias>
+    </matricula>
+</matriculas>

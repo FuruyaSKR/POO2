@@ -3,16 +3,21 @@ package SistemaAcademico.persistencia.json;
 import SistemaAcademico.classes.Matricula;
 import SistemaAcademico.persistencia.IPersistencia;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.time.LocalDate;
 import java.util.*;
 
 public class MatriculaJSONDAO implements IPersistencia<Matricula> {
     private static final String FILE_PATH = "Saida/matriculas.json";
     private final Map<Integer, Matricula> mapa = new HashMap<>();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .setPrettyPrinting()
+            .create();
 
     public MatriculaJSONDAO() {
         carregarArquivo();

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cursos>
+    <curso>
+        <id>1</id>
+        <nome>Ciência da Computação</nome>
+        <fases/>
+        <alunos>
+            <aluno>
+                <id>1</id>
+                <nome>João da Silva</nome>
+            </aluno>
+            <aluno>
+                <id>2</id>
+                <nome>Fernanda Costa</nome>
+            </aluno>
+            <aluno>
+                <id>3</id>
+                <nome>Lucas Pereira</nome>
+            </aluno>
+            <aluno>
+                <id>4</id>
+                <nome>Mariana Rocha Atualizada</nome>
+            </aluno>
+        </alunos>
+        <matriculas/>
+    </curso>
+</cursos>

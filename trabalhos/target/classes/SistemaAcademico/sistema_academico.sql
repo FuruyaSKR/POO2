@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS sistema_academico;
 CREATE DATABASE sistema_academico;
 USE sistema_academico;
 
--- Enum para situação do aluno
 CREATE TABLE SituacaoAlunoEnum (
     situacao ENUM('APROVADO', 'REPROVADO', 'MATRICULADO') PRIMARY KEY
 );
@@ -13,10 +12,11 @@ CREATE TABLE Curso (
     nome VARCHAR(100) NOT NULL
 );
 
--- Tabela de Alunos (sem vínculo direto com Curso)
+-- Tabela de Alunos
 CREATE TABLE Aluno (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
+    curso_id INT,
 );
 
 -- Tabela de Fases
@@ -89,7 +89,7 @@ CREATE TABLE Matricula (
 );
 
 -- Tabela de Frequência
-CREATE TABLE Frequencia (
+CREATE TABLE IF NOT EXISTS Frequencia (
     id INT PRIMARY KEY AUTO_INCREMENT,
     data DATE NOT NULL,
     presente BOOLEAN NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE Frequencia (
 );
 
 -- Tabela de Avaliação
-CREATE TABLE Avaliacao (
+CREATE TABLE IF NOT EXISTS Avaliacao (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nota DOUBLE NOT NULL,
     professor_id INT NOT NULL,

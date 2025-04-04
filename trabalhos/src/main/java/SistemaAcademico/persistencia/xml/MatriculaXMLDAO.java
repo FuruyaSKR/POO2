@@ -1,5 +1,7 @@
 package SistemaAcademico.persistencia.xml;
 
+import SistemaAcademico.classes.Avaliacao;
+import SistemaAcademico.classes.Frequencia;
 import SistemaAcademico.classes.Matricula;
 import SistemaAcademico.persistencia.IPersistencia;
 import org.w3c.dom.*;
@@ -48,6 +50,7 @@ public class MatriculaXMLDAO implements IPersistencia<Matricula> {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.newDocument();
+
             Element root = doc.createElement("matriculas");
             doc.appendChild(root);
 
@@ -67,9 +70,76 @@ public class MatriculaXMLDAO implements IPersistencia<Matricula> {
                 disciplinaId.appendChild(doc.createTextNode(String.valueOf(m.getDisciplina().getId())));
                 matricula.appendChild(disciplinaId);
 
+                if (m.getCurso() != null) {
+                    Element curso = doc.createElement("curso");
+                    Element cursoId = doc.createElement("id");
+                    cursoId.appendChild(doc.createTextNode(String.valueOf(m.getCurso().getId())));
+                    curso.appendChild(cursoId);
+
+                    Element cursoNome = doc.createElement("nome");
+                    cursoNome.appendChild(doc.createTextNode(m.getCurso().getNome()));
+                    curso.appendChild(cursoNome);
+
+                    matricula.appendChild(curso);
+                }
+
                 Element situacao = doc.createElement("situacaoFinal");
                 situacao.appendChild(doc.createTextNode(m.getSituacaoFinal().toString()));
                 matricula.appendChild(situacao);
+
+                Element avaliacoes = doc.createElement("avaliacoes");
+                for (Avaliacao a : m.getAvaliacoes()) {
+                    Element avaliacao = doc.createElement("avaliacao");
+
+                    Element nota = doc.createElement("nota");
+                    nota.appendChild(doc.createTextNode(String.valueOf(a.getNota())));
+                    avaliacao.appendChild(nota);
+
+                    if (a.getProfessorResponsavel() != null) {
+                        Element prof = doc.createElement("professor");
+                        Element profId = doc.createElement("id");
+                        profId.appendChild(doc.createTextNode(String.valueOf(a.getProfessorResponsavel().getId())));
+                        prof.appendChild(profId);
+
+                        Element profNome = doc.createElement("nome");
+                        profNome.appendChild(doc.createTextNode(a.getProfessorResponsavel().getNome()));
+                        prof.appendChild(profNome);
+
+                        avaliacao.appendChild(prof);
+                    }
+
+                    avaliacoes.appendChild(avaliacao);
+                }
+                matricula.appendChild(avaliacoes);
+
+                Element frequencias = doc.createElement("frequencias");
+                for (Frequencia f : m.getFrequencias()) {
+                    Element frequencia = doc.createElement("frequencia");
+
+                    Element data = doc.createElement("data");
+                    data.appendChild(doc.createTextNode(f.getData().toString()));
+                    frequencia.appendChild(data);
+
+                    Element presente = doc.createElement("presente");
+                    presente.appendChild(doc.createTextNode(String.valueOf(f.isPresente())));
+                    frequencia.appendChild(presente);
+
+                    if (f.getProfessorResponsavel() != null) {
+                        Element prof = doc.createElement("professor");
+                        Element profId = doc.createElement("id");
+                        profId.appendChild(doc.createTextNode(String.valueOf(f.getProfessorResponsavel().getId())));
+                        prof.appendChild(profId);
+
+                        Element profNome = doc.createElement("nome");
+                        profNome.appendChild(doc.createTextNode(f.getProfessorResponsavel().getNome()));
+                        prof.appendChild(profNome);
+
+                        frequencia.appendChild(prof);
+                    }
+
+                    frequencias.appendChild(frequencia);
+                }
+                matricula.appendChild(frequencias);
             }
 
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -80,4 +150,5 @@ public class MatriculaXMLDAO implements IPersistencia<Matricula> {
             e.printStackTrace();
         }
     }
+
 }

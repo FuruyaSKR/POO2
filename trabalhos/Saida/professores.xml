@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<professores>
+    <professor>
+        <id>1</id>
+        <nome>Maria Oliveira</nome>
+    </professor>
+    <professor>
+        <id>2</id>
+        <nome>Carlos Souza Atualizado</nome>
+    </professor>
+    <professor>
+        <id>4</id>
+        <nome>Roberto Matos</nome>
+    </professor>
+</professores>

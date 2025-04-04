@@ -7,6 +7,7 @@ import SistemaAcademico.classes.Aluno;
 import SistemaAcademico.classes.Curso;
 import SistemaAcademico.classes.Disciplina;
 import SistemaAcademico.classes.Fase;
+import SistemaAcademico.classes.Matricula;
 import SistemaAcademico.classes.Professor;
 
 import SistemaAcademico.crud.AlunoCRUD;
@@ -14,6 +15,7 @@ import SistemaAcademico.crud.CursoCRUD;
 import SistemaAcademico.crud.DisciplinaCRUD;
 import SistemaAcademico.crud.FaseCRUD;
 import SistemaAcademico.crud.ProfessorCRUD;
+import SistemaAcademico.crud.MatriculaCRUD;
 
 import SistemaAcademico.persistencia.IPersistencia;
 import SistemaAcademico.persistencia.json.*;
@@ -29,6 +31,7 @@ public class Main {
         IPersistencia<Disciplina> disciplinaDAO = null;
         IPersistencia<Fase> faseDAO = null;
         IPersistencia<Curso> cursoDAO = null;
+        IPersistencia<Matricula> matriculaDAO = null;
 
         boolean persistenciaSelecionada = false;
         while (!persistenciaSelecionada) {
@@ -46,6 +49,7 @@ public class Main {
                     disciplinaDAO = new DisciplinaJSONDAO();
                     faseDAO = new FaseJSONDAO();
                     cursoDAO = new CursoJSONDAO();
+                    matriculaDAO = new MatriculaJSONDAO();
                     persistenciaSelecionada = true;
                     break;
                 case "2":
@@ -54,6 +58,7 @@ public class Main {
                     disciplinaDAO = new DisciplinaXMLDAO();
                     faseDAO = new FaseXMLDAO();
                     cursoDAO = new CursoXMLDAO();
+                    matriculaDAO = new MatriculaXMLDAO();
                     persistenciaSelecionada = true;
                     break;
                 case "3":
@@ -62,6 +67,7 @@ public class Main {
                     disciplinaDAO = new DisciplinaMySQLDAO();
                     faseDAO = new FaseMySQLDAO();
                     cursoDAO = new CursoMySQLDAO();
+                    matriculaDAO = new MatriculaMySQLDAO();
                     persistenciaSelecionada = true;
                     break;
                 default:
@@ -77,20 +83,22 @@ public class Main {
         DisciplinaCRUD disciplinaCRUD = new DisciplinaCRUD(disciplinaDAO);
         FaseCRUD faseCRUD = new FaseCRUD(faseDAO);
         CursoCRUD cursoCRUD = new CursoCRUD(cursoDAO);
+        MatriculaCRUD matriculaCRUD = new MatriculaCRUD(matriculaDAO);
 
         // CRIAR OS DADOS
         List<Professor> professores = TestesInsercao.criarProfessores();
         List<Aluno> alunos = TestesInsercao.criarAlunos();
         List<Disciplina> disciplinas = TestesInsercao.criarDisciplinas(professores, alunos);
+        List<Fase> fases = faseCRUD.listarTodasFases();
+        List<Curso> cursos = TestesInsercao.criarCursos(fases, alunos, disciplinas);
+        List<Matricula> matriculas = TestesInsercao.criarMatriculas(alunos, disciplinas, cursos);
 
         // EXECUTAR OS TESTES
         TestesInsercao.testarProfessores(professorCRUD, professores);
         TestesInsercao.testarAlunos(alunoCRUD, alunos);
         TestesInsercao.testarDisciplinas(disciplinaCRUD, disciplinas);
         TestesInsercao.testarFases(faseCRUD, disciplinas);
-
-        List<Fase> fases = faseCRUD.listarTodasFases();
-        List<Curso> cursos = TestesInsercao.criarCursos(fases, alunos, disciplinas);
         TestesInsercao.testarCursos(cursoCRUD, cursos);
+        TestesInsercao.testarMatriculas(matriculaCRUD, matriculas);
     }
 }

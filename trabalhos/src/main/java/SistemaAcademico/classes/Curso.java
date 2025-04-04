@@ -15,6 +15,7 @@ public class Curso {
     public void adicionarAluno(Aluno aluno) {
         if (aluno != null && !alunos.contains(aluno)) {
             alunos.add(aluno);
+            aluno.setCurso(this);
         }
     }
 
@@ -40,16 +41,25 @@ public class Curso {
         }
     }
 
-    // TODO Arrumar
-    // public Matricula matricularAluno(Aluno aluno, Disciplina disciplina) {
-    // if (aluno != null && disciplina != null && disciplina.temVaga()) {
-    // disciplina.adicionarAluno(aluno);
-    // Matricula matricula = new Matricula(aluno, disciplina);
-    // matriculas.add(matricula);
-    // return matricula;
-    // }
-    // return null;
-    // }
+    public Matricula matricularAluno(Aluno aluno, Disciplina disciplina) {
+        if (aluno != null && disciplina != null && disciplina.temVaga()) {
+            disciplina.adicionarAluno(aluno);
+            int novoId = matriculas.size() + 1;
+            Matricula matricula = new Matricula(novoId, aluno, disciplina, this);
+            matriculas.add(matricula);
+            return matricula;
+        }
+        return null;
+    }
+
+    public SituacaoAlunoEnum getSituacaoPorDisciplina(Aluno aluno, Disciplina disciplina) {
+        for (Matricula m : matriculas) {
+            if (m.getAluno().equals(aluno) && m.getDisciplina().equals(disciplina)) {
+                return m.getSituacaoFinal();
+            }
+        }
+        return null;
+    }
 
     public Curso(int id, String nome) {
         this.id = id;

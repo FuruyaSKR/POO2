@@ -1,16 +1,24 @@
 package SistemaAcademico;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import SistemaAcademico.classes.Aluno;
+import SistemaAcademico.classes.Avaliacao;
 import SistemaAcademico.classes.Curso;
 import SistemaAcademico.classes.Disciplina;
 import SistemaAcademico.classes.Fase;
+import SistemaAcademico.classes.Frequencia;
+import SistemaAcademico.classes.Matricula;
 import SistemaAcademico.classes.Professor;
+import SistemaAcademico.classes.SituacaoAlunoEnum;
 import SistemaAcademico.crud.AlunoCRUD;
 import SistemaAcademico.crud.CursoCRUD;
 import SistemaAcademico.crud.DisciplinaCRUD;
 import SistemaAcademico.crud.FaseCRUD;
+import SistemaAcademico.crud.MatriculaCRUD;
 import SistemaAcademico.crud.ProfessorCRUD;
 
 public class TestesInsercao {
@@ -70,6 +78,23 @@ public class TestesInsercao {
         }
 
         return List.of(curso1);
+    }
+
+    public static List<Matricula> criarMatriculas(List<Aluno> alunos, List<Disciplina> disciplinas,
+            List<Curso> cursos) {
+        List<Matricula> matriculas = new ArrayList<>();
+
+        Curso curso = cursos.get(0); // usando o primeiro curso criado
+
+        Matricula m1 = new Matricula(1, alunos.get(1), disciplinas.get(0), curso);
+        Matricula m2 = new Matricula(2, alunos.get(2), disciplinas.get(1), curso);
+        Matricula m3 = new Matricula(3, alunos.get(0), disciplinas.get(3), curso);
+
+        matriculas.add(m1);
+        matriculas.add(m2);
+        matriculas.add(m3);
+
+        return matriculas;
     }
 
     // --------------------------------------------------------------------------------------------------------------------
@@ -172,9 +197,105 @@ public class TestesInsercao {
         for (Curso c : cursoCRUD.listarTodosCursos()) {
             System.out.println("Curso: " + c.getNome());
             System.out.println("Fases: " + c.getFases().size());
-            System.out.println("Disciplinas ofertadas: " + c.getFases().stream()
+
+            long ofertadas = c.getFases().stream()
                     .flatMap(f -> f.listarDisciplinas().stream())
-                    .filter(Disciplina::isOfertada).count());
+                    .filter(Disciplina::isOfertada)
+                    .count();
+            System.out.println("Disciplinas ofertadas: " + ofertadas);
+
+            System.out.println("Alunos vinculados ao curso:");
+            for (Aluno aluno : c.getAlunos()) {
+                System.out.println("- " + aluno.getNome() + " (Curso: " +
+                        (aluno.getCurso() != null ? aluno.getCurso().getNome() : "Nenhum") + ")");
+            }
+
+            List<Disciplina> todasDisciplinas = c.getFases().stream()
+                    .flatMap(f -> f.listarDisciplinas().stream())
+                    .filter(Disciplina::isOfertada)
+                    .toList();
+
+            List<Aluno> alunos = c.getAlunos();
+
+            int idMatricula = 1;
+            for (int i = 0; i < Math.min(todasDisciplinas.size(), alunos.size()); i++) {
+                Disciplina disciplina = todasDisciplinas.get(i);
+                Aluno aluno = alunos.get(i);
+                Matricula m = c.matricularAluno(aluno, disciplina);
+                if (m != null) {
+                    System.out.printf("Matrícula realizada: Aluno %s na disciplina %s (ID %d)\n",
+                            aluno.getNome(), disciplina.getNome(), m.getId());
+                } else {
+                    System.out.printf("Falha ao matricular aluno %s na disciplina %s\n",
+                            aluno.getNome(), disciplina.getNome());
+                }
+            }
+
+            for (Aluno aluno : alunos) {
+                for (Disciplina d : todasDisciplinas) {
+                    SituacaoAlunoEnum situacao = c.getSituacaoPorDisciplina(aluno, d);
+                    if (situacao != null) {
+                        System.out.printf("Aluno %s - Disciplina %s: Situação %s\n",
+                                aluno.getNome(), d.getNome(), situacao);
+                    }
+                }
+            }
+
+            System.out.println();
+        }
+    }
+
+    public static void testarMatriculas(MatriculaCRUD matriculaCRUD, List<Matricula> matriculas) {
+        System.out.println("\n----- Testando Matrículas -----");
+
+        // Apaga tudo e recomeça para evitar dados do JSON "corrompidos"
+        for (Matricula m : matriculaCRUD.listarTodasMatriculas()) {
+            matriculaCRUD.deletarMatricula(m.getId());
+        }
+
+        Random random = new Random();
+
+        for (Matricula m : matriculas) {
+            Disciplina disciplina = m.getDisciplina();
+            List<Professor> professores = disciplina.listarProfessores();
+
+            if (!disciplina.isOfertada()) {
+                System.out.printf(
+                        "Matrícula ID: %d - Disciplina %d não está ofertada, registros não foram realizados.%n",
+                        m.getId(), disciplina.getId());
+                continue;
+            }
+
+            if (professores.isEmpty()) {
+                System.out.printf("Matrícula ID: %d - Disciplina %d sem professor, registros não foram realizados.%n",
+                        m.getId(), disciplina.getId());
+                continue;
+            }
+
+            Professor prof = professores.get(random.nextInt(professores.size()));
+
+            for (int i = 0; i < 3; i++) {
+                double nota = 5 + random.nextDouble() * 5;
+                m.registrarAvaliacao(new Avaliacao(nota, prof));
+            }
+
+            for (int i = 0; i < 10; i++) {
+                boolean presente = random.nextInt(100) < 60;
+                m.registrarFrequencia(new Frequencia(LocalDate.now().minusDays(i), presente, prof));
+            }
+
+            m.atualizarSituacao();
+            matriculaCRUD.salvarMatricula(m);
+        }
+
+        for (Matricula m : matriculaCRUD.listarTodasMatriculas()) {
+            System.out.println("Matrícula ID: " + m.getId());
+            System.out.println("Aluno: " + m.getAluno().getId());
+            System.out.println("Disciplina: " + m.getDisciplina().getId());
+            System.out.printf("Média: %.2f\n", m.calcularMedia());
+            System.out.printf("Frequência: %.2f%%\n", m.calcularFrequencia());
+            System.out.println("Situação Final: " + m.getSituacaoFinal());
+            System.out.println();
         }
     }
 

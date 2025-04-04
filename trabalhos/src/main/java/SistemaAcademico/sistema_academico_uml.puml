@@ -9,8 +9,7 @@ enum SituacaoAlunoEnum {
 class Aluno {
   - id: int
   - nome: String
-
-  + getSituacaoPorDisciplina(d: Disciplina): SituacaoAlunoEnum
+  - curso: Curso
 }
 
 class Curso {
@@ -23,6 +22,7 @@ class Curso {
   + adicionarAluno(a: Aluno)
   + adicionarFase(f: Fase)
   + listarDisciplinasPorFase(fase: int): List<Disciplina>
+  + getSituacaoPorDisciplina(d: Disciplina): SituacaoAlunoEnum
   + ofertarDisciplina(d: Disciplina)
   + matricularAluno(a: Aluno, d: Disciplina): Matricula
 }
