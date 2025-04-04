@@ -96,10 +96,29 @@ public class MatriculaMySQLDAO implements IPersistencia<Matricula> {
 
     @Override
     public void deletar(int id) {
-        String sql = "DELETE FROM Matricula WHERE id = ?";
-        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
+        String sqlDeleteAvaliacao = "DELETE FROM Avaliacao WHERE matricula_id = ?";
+        String sqlDeleteFrequencia = "DELETE FROM Frequencia WHERE matricula_id = ?";
+        String sqlDeleteMatricula = "DELETE FROM Matricula WHERE id = ?";
+
+        try (Connection conn = conectar()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmtAv = conn.prepareStatement(sqlDeleteAvaliacao)) {
+                stmtAv.setInt(1, id);
+                stmtAv.executeUpdate();
+            }
+
+            try (PreparedStatement stmtFq = conn.prepareStatement(sqlDeleteFrequencia)) {
+                stmtFq.setInt(1, id);
+                stmtFq.executeUpdate();
+            }
+
+            try (PreparedStatement stmtMat = conn.prepareStatement(sqlDeleteMatricula)) {
+                stmtMat.setInt(1, id);
+                stmtMat.executeUpdate();
+            }
+
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }

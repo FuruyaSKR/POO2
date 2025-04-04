@@ -20,7 +20,7 @@ public class CursoMySQLDAO implements IPersistencia<Curso> {
     @Override
     public void salvar(Curso curso) {
         String sqlCurso = "INSERT INTO Curso (id, nome) VALUES (?, ?)";
-        String sqlRelacao = "INSERT INTO curso_fase (curso_id, fase_id) VALUES (?, ?)";
+        String sqlRelacao = "INSERT INTO Curso_Fase (curso_id, fase_id) VALUES (?, ?)";
 
         try (Connection conn = conectar()) {
             conn.setAutoCommit(false);
@@ -49,7 +49,7 @@ public class CursoMySQLDAO implements IPersistencia<Curso> {
     @Override
     public Curso buscarPorId(int id) {
         String sqlCurso = "SELECT * FROM Curso WHERE id = ?";
-        String sqlFases = "SELECT f.numero, f.nome FROM Fase f JOIN curso_fase cf ON f.id = cf.fase_id WHERE cf.curso_id = ?";
+        String sqlFases = "SELECT f.numero, f.nome FROM Fase f JOIN Curso_Fase cf ON f.id = cf.fase_id WHERE cf.curso_id = ?";
 
         try (Connection conn = conectar();
                 PreparedStatement stmtCurso = conn.prepareStatement(sqlCurso)) {
@@ -109,10 +109,10 @@ public class CursoMySQLDAO implements IPersistencia<Curso> {
 
         String sqlCurso = "SELECT * FROM Curso";
         String sqlFases = "SELECT f.id, f.numero, f.nome FROM Fase f " +
-                "JOIN curso_fase cf ON f.id = cf.fase_id WHERE cf.curso_id = ?";
+                "JOIN Curso_Fase cf ON f.id = cf.fase_id WHERE cf.curso_id = ?";
         String sqlDisciplinas = "SELECT d.id, d.nome, d.ofertada, d.capacidadeMaxima " +
                 "FROM Disciplina d " +
-                "JOIN fase_disciplina fd ON d.id = fd.disciplina_id " +
+                "JOIN Fase_disciplina fd ON d.id = fd.disciplina_id " +
                 "WHERE fd.fase_id = ?";
 
         try (Connection conn = conectar();

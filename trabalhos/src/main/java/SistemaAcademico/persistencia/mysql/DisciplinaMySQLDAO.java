@@ -19,7 +19,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
 
     @Override
     public void salvar(Disciplina d) {
-        String sql = "INSERT INTO disciplina (id, nome, ofertada, capacidadeMaxima) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Disciplina (id, nome, ofertada, capacidadeMaxima) VALUES (?, ?, ?, ?)";
         try (Connection conn = conectar()) {
             conn.setAutoCommit(false);
 
@@ -33,7 +33,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
             }
 
             // Inserir professores
-            String insertProfessor = "INSERT INTO disciplina_professor (disciplina_id, professor_id) VALUES (?, ?)";
+            String insertProfessor = "INSERT INTO Disciplina_Professor (disciplina_id, professor_id) VALUES (?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(insertProfessor)) {
                 for (Professor p : d.listarProfessores()) {
                     stmt.setInt(1, d.getId());
@@ -44,7 +44,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
             }
 
             // Inserir alunos
-            String insertAluno = "INSERT INTO disciplina_aluno (disciplina_id, aluno_id) VALUES (?, ?)";
+            String insertAluno = "INSERT INTO Disciplina_Aluno (disciplina_id, aluno_id) VALUES (?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(insertAluno)) {
                 for (var aluno : d.getAlunosMatriculados()) {
                     stmt.setInt(1, d.getId());
@@ -62,7 +62,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
 
     @Override
     public Disciplina buscarPorId(int id) {
-        String sql = "SELECT * FROM disciplina WHERE id = ?";
+        String sql = "SELECT * FROM Disciplina WHERE id = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -82,7 +82,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
 
     @Override
     public void atualizar(Disciplina d) {
-        String sql = "UPDATE disciplina SET nome = ? WHERE id = ?";
+        String sql = "UPDATE Disciplina SET nome = ? WHERE id = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, d.getNome());
             stmt.setInt(2, d.getId());
@@ -94,7 +94,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
 
     @Override
     public void deletar(int id) {
-        String sql = "DELETE FROM disciplina WHERE id = ?";
+        String sql = "DELETE FROM Disciplina WHERE id = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -106,7 +106,7 @@ public class DisciplinaMySQLDAO implements IPersistencia<Disciplina> {
     @Override
     public List<Disciplina> listarTodos() {
         List<Disciplina> lista = new ArrayList<>();
-        String sql = "SELECT * FROM disciplina";
+        String sql = "SELECT * FROM Disciplina";
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {

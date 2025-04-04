@@ -52,7 +52,7 @@ public class AlunoJSONDAO implements IPersistencia<Aluno> {
 
     private void salvarEmArquivo() {
         try {
-            File dir = new File("saida");
+            File dir = new File("Saida");
             if (!dir.exists())
                 dir.mkdirs();
 

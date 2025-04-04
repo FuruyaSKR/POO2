@@ -19,7 +19,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
 
     @Override
     public void salvar(Professor professor) {
-        String sql = "INSERT INTO professor (id, nome) VALUES (?, ?)";
+        String sql = "INSERT INTO Professor (id, nome) VALUES (?, ?)";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, professor.getId());
@@ -32,7 +32,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
 
     @Override
     public Professor buscarPorId(int id) {
-        String sql = "SELECT * FROM professor WHERE id = ?";
+        String sql = "SELECT * FROM Professor WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -48,7 +48,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
 
     @Override
     public void atualizar(Professor professor) {
-        String sql = "UPDATE professor SET nome = ? WHERE id = ?";
+        String sql = "UPDATE Professor SET nome = ? WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, professor.getNome());
@@ -61,7 +61,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
 
     @Override
     public void deletar(int id) {
-        String sql = "DELETE FROM professor WHERE id = ?";
+        String sql = "DELETE FROM Professor WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -74,7 +74,7 @@ public class ProfessorMySQLDAO implements IPersistencia<Professor> {
     @Override
     public List<Professor> listarTodos() {
         List<Professor> lista = new ArrayList<>();
-        String sql = "SELECT * FROM professor";
+        String sql = "SELECT * FROM Professor";
 
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();
