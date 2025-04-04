@@ -15,8 +15,9 @@ CREATE TABLE Curso (
 -- Tabela de Alunos
 CREATE TABLE Aluno (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL
-    curso_id INT,
+    nome VARCHAR(100) NOT NULL,
+	curso_id INT,
+    FOREIGN KEY (curso_id) REFERENCES Curso(id)
 );
 
 -- Tabela de Fases

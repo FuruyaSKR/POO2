@@ -4,7 +4,7 @@ public class Aluno {
 
 	private int id;
 	private String nome;
-	private Curso curso;
+	private transient Curso curso;
 
 	public Aluno(int id, String nome) {
 		this.id = id;
