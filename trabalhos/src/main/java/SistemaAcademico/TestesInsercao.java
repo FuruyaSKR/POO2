@@ -217,7 +217,6 @@ public class TestesInsercao {
 
             List<Aluno> alunos = c.getAlunos();
 
-            int idMatricula = 1;
             for (int i = 0; i < Math.min(todasDisciplinas.size(), alunos.size()); i++) {
                 Disciplina disciplina = todasDisciplinas.get(i);
                 Aluno aluno = alunos.get(i);
@@ -248,7 +247,6 @@ public class TestesInsercao {
     public static void testarMatriculas(MatriculaCRUD matriculaCRUD, List<Matricula> matriculas) {
         System.out.println("\n----- Testando Matrículas -----");
 
-        // Apaga tudo e recomeça para evitar dados do JSON "corrompidos"
         for (Matricula m : matriculaCRUD.listarTodasMatriculas()) {
             matriculaCRUD.deletarMatricula(m.getId());
         }

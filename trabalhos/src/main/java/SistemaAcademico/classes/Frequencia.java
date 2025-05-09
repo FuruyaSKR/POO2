@@ -3,7 +3,6 @@ package SistemaAcademico.classes;
 import java.time.LocalDate;
 
 public class Frequencia {
-
     private LocalDate data;
     private boolean presente;
     private Professor professorResponsavel;

@@ -17,9 +17,21 @@ public class AlunoMySQLDAO implements IPersistencia<Aluno> {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    public boolean testarConexao() {
+        try (Connection conn = conectar()) {
+            if (conn != null && !conn.isClosed()) {
+                System.out.println("✅ Conexão com o banco de dados estabelecida com sucesso!");
+                return true;
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erro ao conectar com o banco de dados: " + e.getMessage());
+        }
+        return false;
+    }
+
     @Override
     public void salvar(Aluno aluno) {
-        String sql = "INSERT INTO aluno (id, nome) VALUES (?, ?)";
+        String sql = "INSERT INTO Aluno (id, nome) VALUES (?, ?)";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, aluno.getId());
@@ -32,7 +44,7 @@ public class AlunoMySQLDAO implements IPersistencia<Aluno> {
 
     @Override
     public Aluno buscarPorId(int id) {
-        String sql = "SELECT * FROM aluno WHERE id = ?";
+        String sql = "SELECT * FROM Aluno WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -48,7 +60,7 @@ public class AlunoMySQLDAO implements IPersistencia<Aluno> {
 
     @Override
     public void atualizar(Aluno aluno) {
-        String sql = "UPDATE aluno SET nome = ? WHERE id = ?";
+        String sql = "UPDATE Aluno SET nome = ? WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, aluno.getNome());
@@ -61,7 +73,7 @@ public class AlunoMySQLDAO implements IPersistencia<Aluno> {
 
     @Override
     public void deletar(int id) {
-        String sql = "DELETE FROM aluno WHERE id = ?";
+        String sql = "DELETE FROM Aluno WHERE id = ?";
         try (Connection conn = conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -74,7 +86,7 @@ public class AlunoMySQLDAO implements IPersistencia<Aluno> {
     @Override
     public List<Aluno> listarTodos() {
         List<Aluno> lista = new ArrayList<>();
-        String sql = "SELECT * FROM aluno";
+        String sql = "SELECT * FROM Aluno";
 
         try (Connection conn = conectar();
                 Statement stmt = conn.createStatement();
