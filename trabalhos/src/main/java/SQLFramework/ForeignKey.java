@@ -15,7 +15,6 @@ public class ForeignKey {
         return String.format("FOREIGN KEY(%s) REFERENCES %s(%s)", column, referencedTable.getName(), referencedColumn);
     }
 
-    // getters e setters
     public String getColumn() {
         return column;
     }

@@ -7,10 +7,10 @@ public class Main {
         Zoo animais = new Zoo();
 
         animais.addAnimal(new Cachorro());
-        
+
         Zoo ordem = new Zoo();
         ordem.addAnimal(new Mamifero());
-        
+
         zoo.addAnimal(animais);
         zoo.addAnimal(ordem);
 
