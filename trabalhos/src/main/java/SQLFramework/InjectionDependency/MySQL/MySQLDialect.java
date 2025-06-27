@@ -1,7 +1,7 @@
 package SQLFramework.InjectionDependency.MySQL;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import SQLFramework.DatabeseController.*;
 import SQLFramework.InjectionDependency.SQLDialect;
@@ -14,11 +14,38 @@ public class MySQLDialect implements SQLDialect {
 
     @Override
     public String createTableSQL(Table table) {
-        List<String> defs = table.getFields().stream()
-                .map(f -> f.toSQL(this))
-                .collect(Collectors.toList());
-        String cols = String.join(", ", defs);
-        return String.format("CREATE TABLE %s (%s)", table.getName(), cols);
+        List<String> defs = new ArrayList<>();
+        List<String> pkCols = new ArrayList<>();
+
+        for (Field f : table.getFields()) {
+            // definição de coluna
+            defs.add(fieldDefinition(f));
+
+            // definição de chave estrangeira se existir
+            ForeignKey fk = f.getForeignKey();
+            if (fk != null) {
+                defs.add(foreignKeyDefinition(fk));
+            }
+
+            // coleta colunas PK
+            if (f.isPrimaryKey()) {
+                pkCols.add(f.getName());
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("CREATE TABLE ").append(table.getName()).append(" (");
+        sb.append(String.join(", ", defs));
+
+        // constraint de PK composta ou simples
+        if (!pkCols.isEmpty()) {
+            sb.append(", PRIMARY KEY(")
+                    .append(String.join(", ", pkCols))
+                    .append(")");
+        }
+
+        sb.append(")");
+        return sb.toString();
     }
 
     @Override
@@ -28,7 +55,8 @@ public class MySQLDialect implements SQLDialect {
 
     @Override
     public String foreignKeyDefinition(ForeignKey fk) {
-        return String.format("FOREIGN KEY (%s) REFERENCES %s(%s)",
+        return String.format(
+                "FOREIGN KEY (%s) REFERENCES %s(%s)",
                 fk.getColumn(), fk.getReferencedTable(), fk.getReferencedColumn());
     }
 }
