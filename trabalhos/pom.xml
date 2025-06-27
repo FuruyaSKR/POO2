@@ -13,6 +13,24 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <build>
+    <plugins>
+        <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
+        <configuration>
+            <includes>
+                <include>SQLFramework/DatabaseController/**</include>
+                <include>SQLFramework/InjectionDependency/**</include>
+            </includes>
+            <excludes>
+                <exclude>SQLFramework/Main.class</exclude>
+            </excludes>
+        </configuration>
+        </plugin>
+    </plugins>
+    </build>
+
     <dependencies>
         <!-- PostGresql Connection -->
         <dependency>
