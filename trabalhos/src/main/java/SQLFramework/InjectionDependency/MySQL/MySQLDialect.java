@@ -3,7 +3,7 @@ package SQLFramework.InjectionDependency.MySQL;
 import java.util.ArrayList;
 import java.util.List;
 
-import SQLFramework.DatabeseController.*;
+import SQLFramework.DatabaseController.*;
 import SQLFramework.InjectionDependency.SQLDialect;
 
 public class MySQLDialect implements SQLDialect {
@@ -18,16 +18,13 @@ public class MySQLDialect implements SQLDialect {
         List<String> pkCols = new ArrayList<>();
 
         for (Field f : table.getFields()) {
-            // Definição de coluna
             defs.add(fieldDefinition(f));
 
-            // Definição de chave estrangeira se existir
             ForeignKey fk = f.getForeignKey();
             if (fk != null) {
                 defs.add(foreignKeyDefinition(fk));
             }
 
-            // Coleta colunas PK
             if (f.isPrimaryKey()) {
                 pkCols.add(f.getName());
             }

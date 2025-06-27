@@ -59,6 +59,7 @@ public class ConnectionConfig implements IConnection {
             this.pass = cfg.pass;
             this.dialect = cfg.dialect;
             this.dbType = cfg.dbType;
+            this.databaseName = cfg.databaseName;
         }
     }
 }

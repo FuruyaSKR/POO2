@@ -1,9 +1,14 @@
 @startuml SQLFramework
 skinparam classAttributeIconSize 0
 
+enum DbType {
+  - MySQL
+  - POSTGRES
+}
 interface IConnection {
   + getConnection(): Connection
   + getDialect(): SQLDialect
+  + setConfig(IConnection): void
 }
 
 class ConnectionConfig implements IConnection {
@@ -11,7 +16,9 @@ class ConnectionConfig implements IConnection {
   - port: int
   - user: String
   - pass: String
+  - dialect: SQLDialect
   - dbType: DbType
+  - databaseName: String
   + getConnection(): Connection
   + getDialect(): SQLDialect
   + setConfig(config: IConnection): void

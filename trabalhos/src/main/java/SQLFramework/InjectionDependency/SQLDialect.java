@@ -1,6 +1,6 @@
 package SQLFramework.InjectionDependency;
 
-import SQLFramework.DatabeseController.*;
+import SQLFramework.DatabaseController.*;
 
 public interface SQLDialect {
     String createDatabaseSQL(Database db);

@@ -1,4 +1,4 @@
-package SQLFramework.DatabeseController;
+package SQLFramework.DatabaseController;
 
 import java.sql.Connection;
 import java.sql.SQLException;

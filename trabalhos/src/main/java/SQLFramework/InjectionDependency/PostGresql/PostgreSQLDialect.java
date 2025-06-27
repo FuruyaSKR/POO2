@@ -3,13 +3,13 @@ package SQLFramework.InjectionDependency.PostGresql;
 import java.util.ArrayList;
 import java.util.List;
 
-import SQLFramework.DatabeseController.*;
+import SQLFramework.DatabaseController.*;
 import SQLFramework.InjectionDependency.SQLDialect;
 
 public class PostgreSQLDialect implements SQLDialect {
     @Override
     public String createDatabaseSQL(Database db) {
-        return "CREATE DATABASE " + db.getName();
+        return "CREATE DATABASE " + db.getName().toLowerCase();
     }
 
     @Override
