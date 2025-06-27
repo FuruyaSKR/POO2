@@ -1,0 +1,85 @@
+@startuml SQLFramework
+skinparam classAttributeIconSize 0
+
+interface IConnection {
+  + getConnection(): Connection
+  + getDialect(): SQLDialect
+}
+
+class ConnectionConfig implements IConnection {
+  - host: String
+  - port: int
+  - user: String
+  - pass: String
+  - dbType: DbType
+  + getConnection(): Connection
+  + getDialect(): SQLDialect
+  + setConfig(config: IConnection): void
+}
+
+interface SQLDialect {
+  + createDatabaseSQL(db: Database): String
+  + createTableSQL(table: Table): String
+  + fieldDefinition(field: Field): String
+  + foreignKeyDefinition(fk: ForeignKey): String
+}
+
+class MySQLDialect implements SQLDialect
+class PostgreSQLDialect implements SQLDialect
+
+class DatabaseManager {
+  - connection: IConnection
+  + setConnection(conn: IConnection): void
+  + createDatabase(name: String): Database
+  + dropDatabase(name: String): void
+  + addTable(db: Database, table: Table): void
+  + dropTable(db: Database, name: String): void
+  + addField(tbl: Table, field: Field): void
+  + dropField(tbl: Table, name: String): void
+  + generateScript(db: Database): String
+  + executeScript(script: String): void
+}
+
+class Database {
+  - name: String
+  - tables: List<Table>
+  + addTable(t: Table): void
+  + removeTable(name: String): void
+}
+
+class Table {
+  - name: String
+  - fields: List<Field>
+  + addField(f: Field): void
+  + removeField(name: String): void
+}
+
+class Field {
+  - name: String
+  - type: String
+  - primaryKey: Boolean
+  + toSQL(dialect: SQLDialect): String
+}
+
+class ForeignKey {
+  - column: String
+  - referencedTable: String
+  - referencedColumn: String
+  + toSQL(dialect: SQLDialect): String
+}
+
+' Relações de composição
+Database "1" *-- "0..*" Table
+Table    "1" *-- "0..*" Field
+Field    "0..1" *-- "0..1" ForeignKey : foreignKey
+
+' Dependências de uso
+DatabaseManager ..> IConnection
+DatabaseManager ..> Database
+DatabaseManager ..> Table
+DatabaseManager ..> Field
+DatabaseManager ..> ForeignKey
+ConnectionConfig ..> SQLDialect
+SQLDialect <|-- MySQLDialect
+SQLDialect <|-- PostgreSQLDialect
+@enduml

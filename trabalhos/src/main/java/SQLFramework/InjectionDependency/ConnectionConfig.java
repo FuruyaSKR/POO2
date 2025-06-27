@@ -11,7 +11,7 @@ public class ConnectionConfig implements IConnection {
     private String pass;
     private SQLDialect dialect;
     private DbType dbType;
-    private String databaseName; // novo campo
+    private String databaseName;
 
     public ConnectionConfig(String host, int port, String user, String pass,
             SQLDialect dialect, DbType dbType, String databaseName) {

@@ -1,4 +1,4 @@
-package SQLFramework.InjectionDependency.MySQL;
+package SQLFramework.InjectionDependency.PostGresql;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import SQLFramework.DatabeseController.*;
 import SQLFramework.InjectionDependency.SQLDialect;
 
-public class MySQLDialect implements SQLDialect {
+public class PostgreSQLDialect implements SQLDialect {
     @Override
     public String createDatabaseSQL(Database db) {
-        return "CREATE DATABASE IF NOT EXISTS " + db.getName();
+        return "CREATE DATABASE " + db.getName();
     }
 
     @Override
@@ -18,31 +18,22 @@ public class MySQLDialect implements SQLDialect {
         List<String> pkCols = new ArrayList<>();
 
         for (Field f : table.getFields()) {
-            // Definição de coluna
             defs.add(fieldDefinition(f));
-
-            // Definição de chave estrangeira se existir
             ForeignKey fk = f.getForeignKey();
-            if (fk != null) {
+            if (fk != null)
                 defs.add(foreignKeyDefinition(fk));
-            }
-
-            // Coleta colunas PK
-            if (f.isPrimaryKey()) {
+            if (f.isPrimaryKey())
                 pkCols.add(f.getName());
-            }
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE ").append(table.getName()).append(" (");
         sb.append(String.join(", ", defs));
-
         if (!pkCols.isEmpty()) {
             sb.append(", PRIMARY KEY(")
                     .append(String.join(", ", pkCols))
                     .append(")");
         }
-
         sb.append(")");
         return sb.toString();
     }
