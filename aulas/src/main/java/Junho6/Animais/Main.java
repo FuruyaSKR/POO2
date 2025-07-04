@@ -6,7 +6,7 @@ public class Main {
 
         Zoo animais = new Zoo();
 
-        animais.addAnimal(new Cachorro());
+        // animais.addAnimal(new Cachorro());
 
         Zoo ordem = new Zoo();
         ordem.addAnimal(new Mamifero());
