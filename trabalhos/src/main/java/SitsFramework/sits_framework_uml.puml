@@ -1,0 +1,81 @@
+@startuml SitsFramework
+class AppConfig {
+  -inputDir: String
+  -outputDir: String
+  -band: int
+  +load(): void
+}
+
+class ImageCubeManager {
+  -config: AppConfig
+  -images: List<SatelliteImage>
+  +run(): void
+  +processAllImages(): void
+  +getStatusReport(): List<ImageStatus>
+}
+
+class SatelliteImage {
+  -filepath: String
+  -bands: int
+  -dimensions: String
+  -satelliteId: String
+  -sensorId: String
+  -tile: String
+  -date: String
+  +load(): void
+  +getBand(int): int[][]
+  +getStatus(): ImageStatus
+}
+
+class ImageStatus {
+  -filename: String
+  -status: String
+  -bandCount: int
+  -dimensions: String
+  -satelliteId: String
+  -errorMessage: String
+  +updateStatus(newStatus: String): void
+}
+
+class ImageLoader {
+  +listTiffFiles(dir: String): List<String>
+  +loadSatelliteImage(path: String): SatelliteImage
+}
+
+class ImageProcessor {
+  +calcHistogram(pixels: int[][]): Map<Integer, Integer>
+  +calcStats(pixels: int[][]): ImageStats
+  +thresholdMask(pixels: int[][], threshold: int): int[][]
+}
+
+class ImageExporter {
+  +exportHistogram(hist: Map<Integer, Integer>, path: String): void
+  +exportStats(stats: ImageStats, path: String): void
+  +exportImage(pixels: int[][], path: String): void
+}
+
+class SatelliteImageValidator {
+  +validate(image: SatelliteImage): boolean
+}
+
+class ImageStats {
+  -mean: double
+  -min: int
+  -max: int
+  -stddev: double
+  +getMean(): double
+  +getMin(): int
+  +getMax(): int
+  +getStddev(): double
+}
+
+AppConfig "1" o-- "1" ImageCubeManager
+ImageCubeManager "1" o-- "*" SatelliteImage
+SatelliteImage "1" *-- "1" ImageStatus
+SatelliteImage "1" o-- "0..1" ImageStats
+ImageCubeManager ..> ImageLoader
+ImageCubeManager ..> ImageProcessor
+ImageCubeManager ..> ImageExporter
+ImageCubeManager ..> SatelliteImageValidator
+
+@enduml
