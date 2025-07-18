@@ -1,4 +1,4 @@
-package SitsFramework.api;
+package SitsFrameworkController.api;
 
 import java.io.IOException;
 import java.net.URI;

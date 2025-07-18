@@ -1,4 +1,4 @@
-package SitsFramework.util;
+package SitsFrameworkController.util;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
@@ -99,4 +99,5 @@ public class ImageProcessingUtils {
             }
         return gray;
     }
+
 }

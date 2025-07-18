@@ -1,0 +1,63 @@
+@startuml SitsFrameworkController
+
+
+class ImageApiController {
+    -config: Config
+    +buscarImagens(quantidade: int): List<ImageTiffMeta>
+    +baixarImagens(lista: List<ImageTiffMeta>, quantidade: int): void
+    +processarImagens(tipo: TipoProcessamento, quantidade: int): void
+    +imageDownloader(fileUrl: String, destino: String): void
+}
+
+class ApiClient {
+    __+get(url: String): String__
+}
+
+class SitsFramework {
+    -apiController: ImageApiController
+    +SitsFramework(config: Config)
+    +buscarImagens(quantidade: int): List<ImageTiffMeta>
+    +baixarImagens(imagens: List<ImageTiffMeta>, quantidade: int): void
+    +processarImagens(tipo: TipoProcessamento, quantidade: int): void
+    +limparPasta(): void
+}
+
+class Config {
+    +LONG_MIN: double
+    +LAT_MIN: double
+    +LONG_MAX: double
+    +LAT_MAX: double
+    +OUTPUT_DIR: String
+}
+
+class ImageProcessingUtils {
+    +__toGray(img: BufferedImage): BufferedImage__
+    +__binarize(img: BufferedImage, threshold: int): BufferedImage__
+    +__edgeDetect(img: BufferedImage): BufferedImage__
+    +__negativo(img: BufferedImage): BufferedImage__
+    +__contraste(img: BufferedImage): BufferedImage__
+}
+
+class ImageTiffMeta {
+    +url: String
+    +title: String
+    +date: String
+    +fileSize: long
+}
+
+enum TipoProcessamento {
+    CINZA
+    BINARIZACAO
+    BORDA
+    NEGATIVO
+    CONTRASTE
+}
+
+ImageApiController "1" o-- "0..1" Config
+ImageApiController "1" o-- "0..N" ImageTiffMeta
+ImageApiController "1" ..> "0..N" ImageProcessingUtils
+ImageApiController "1" ..> "1" TipoProcessamento
+SitsFramework "1" o-- "1" ImageApiController
+ImageApiController ..> ApiClient
+
+@enduml
