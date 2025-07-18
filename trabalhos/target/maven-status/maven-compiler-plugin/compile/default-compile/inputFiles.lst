@@ -1,3 +1,4 @@
+/home/victor/codes/POO2/trabalhos/src/main/java/SitsFramework/api/ApiClient.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/json/AlunoJSONDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/classes/Avaliacao.java
 /home/victor/codes/POO2/trabalhos/src/main/java/Generics/Exercicio4/Dicionario.java
@@ -17,6 +18,7 @@
 /home/victor/codes/POO2/trabalhos/src/main/java/SQLFramework/DatabaseController/Table.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/IPersistencia.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SQLFramework/InjectionDependency/ConnectionConfig.java
+/home/victor/codes/POO2/trabalhos/src/main/java/SitsFramework/config/Config.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/xml/AlunoXMLDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/mysql/CursoMySQLDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/Generics/Exercicio4/Main.java
@@ -34,6 +36,7 @@
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/Main.java
 /home/victor/codes/POO2/trabalhos/src/main/java/Generics/Exercicio1/Main.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/mysql/DisciplinaMySQLDAO.java
+/home/victor/codes/POO2/trabalhos/src/main/java/SitsFramework/api/OAMImageService.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/crud/FaseCRUD.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/xml/CursoXMLDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SQLFramework/InjectionDependency/PostGresql/PostgreSQLDialect.java
@@ -42,12 +45,14 @@
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/xml/FaseXMLDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/TesteConexao.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/classes/Professor.java
+/home/victor/codes/POO2/trabalhos/src/main/java/SitsFramework/Main.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/crud/AlunoCRUD.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/mysql/FaseMySQLDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/crud/MatriculaCRUD.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/classes/Fase.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/classes/Disciplina.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/mysql/AlunoMySQLDAO.java
+/home/victor/codes/POO2/trabalhos/src/main/java/SitsFramework/util/ImageDownloader.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SQLFramework/DatabaseController/ForeignKey.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SistemaAcademico/persistencia/xml/DisciplinaXMLDAO.java
 /home/victor/codes/POO2/trabalhos/src/main/java/SQLFramework/DatabaseController/DatabaseManager.java

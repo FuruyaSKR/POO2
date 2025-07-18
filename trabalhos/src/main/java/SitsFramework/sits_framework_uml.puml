@@ -1,81 +1,53 @@
-@startuml SitsFramework
-class AppConfig {
-  -inputDir: String
-  -outputDir: String
-  -band: int
-  +load(): void
+@startuml SitsFrameworkController
+
+
+class ImageApiController {
+    +config: Config
+    +buscarImagens(): List<ImageMeta>
+    +baixarImagens(lista: List<ImageMeta>): void
+    +processarImagens(tipo: TipoProcessamento): void
 }
 
-class ImageCubeManager {
-  -config: AppConfig
-  -images: List<SatelliteImage>
-  +run(): void
-  +processAllImages(): void
-  +getStatusReport(): List<ImageStatus>
+class ImageDownloader {
+    +download(fileUrl: String, destino: String): void
 }
 
-class SatelliteImage {
-  -filepath: String
-  -bands: int
-  -dimensions: String
-  -satelliteId: String
-  -sensorId: String
-  -tile: String
-  -date: String
-  +load(): void
-  +getBand(int): int[][]
-  +getStatus(): ImageStatus
+class Config {
+    +LONG_MIN: double
+    +LAT_MIN: double
+    +LONG_MAX: double
+    +LAT_MAX: double
+    +OUTPUT_DIR: String
 }
 
-class ImageStatus {
-  -filename: String
-  -status: String
-  -bandCount: int
-  -dimensions: String
-  -satelliteId: String
-  -errorMessage: String
-  +updateStatus(newStatus: String): void
+class ImageProcessingUtils {
+    +toGray(img: BufferedImage): BufferedImage
+    +binarize(img: BufferedImage, threshold: int): BufferedImage
+    +edgeDetect(img: BufferedImage): BufferedImage
+    +negativo(img: BufferedImage): BufferedImage
+    +contraste(img: BufferedImage): BufferedImage
 }
 
-class ImageLoader {
-  +listTiffFiles(dir: String): List<String>
-  +loadSatelliteImage(path: String): SatelliteImage
+class ImageMeta {
+    +url: String
+    +title: String
+    +date: String
+    +fileSize: long
 }
 
-class ImageProcessor {
-  +calcHistogram(pixels: int[][]): Map<Integer, Integer>
-  +calcStats(pixels: int[][]): ImageStats
-  +thresholdMask(pixels: int[][], threshold: int): int[][]
+enum TipoProcessamento {
+    CINZA
+    BINARIZACAO
+    BORDA
+    NEGATIVO
+    CONTRASTE
 }
 
-class ImageExporter {
-  +exportHistogram(hist: Map<Integer, Integer>, path: String): void
-  +exportStats(stats: ImageStats, path: String): void
-  +exportImage(pixels: int[][], path: String): void
-}
-
-class SatelliteImageValidator {
-  +validate(image: SatelliteImage): boolean
-}
-
-class ImageStats {
-  -mean: double
-  -min: int
-  -max: int
-  -stddev: double
-  +getMean(): double
-  +getMin(): int
-  +getMax(): int
-  +getStddev(): double
-}
-
-AppConfig "1" o-- "1" ImageCubeManager
-ImageCubeManager "1" o-- "*" SatelliteImage
-SatelliteImage "1" *-- "1" ImageStatus
-SatelliteImage "1" o-- "0..1" ImageStats
-ImageCubeManager ..> ImageLoader
-ImageCubeManager ..> ImageProcessor
-ImageCubeManager ..> ImageExporter
-ImageCubeManager ..> SatelliteImageValidator
+ImageApiController "1" o-- "0..1" Config
+ImageApiController "1" o-- "0..N" ImageMeta
+ImageApiController "1" ..> "0..N" ImageDownloader
+ImageApiController "1" ..> "0..N" ImageProcessingUtils
+ImageApiController "1" ..> "1" TipoProcessamento
+ImageDownloader "1" ..> "1" Config
 
 @enduml

@@ -4,6 +4,7 @@ SQLFramework/DatabaseController/Table.class
 Generics/Exercicio3/ProdutoX.class
 SistemaAcademico/persistencia/xml/AlunoXMLDAO.class
 SistemaAcademico/crud/DisciplinaCRUD.class
+SitsFramework/config/Config.class
 SistemaAcademico/persistencia/xml/FaseXMLDAO.class
 SistemaAcademico/persistencia/json/CursoJSONDAO$2.class
 Generics/Exercicio1/Generics.class
@@ -18,6 +19,7 @@ SistemaAcademico/classes/Curso.class
 SQLFramework/InjectionDependency/MySQL/MySQLDialect.class
 Generics/Exercicio2/Main.class
 SQLFramework/InjectionDependency/ConnectionConfig.class
+SitsFramework/api/ApiClient.class
 Generics/Exercicio4/Main.class
 SistemaAcademico/classes/Matricula.class
 SQLFramework/DatabaseController/DatabaseManager.class
@@ -35,9 +37,11 @@ SistemaAcademico/persistencia/json/ProfessorJSONDAO$1.class
 SistemaAcademico/persistencia/mysql/CursoMySQLDAO.class
 Generics/Exercicio4/Dicionario.class
 SQLFramework/InjectionDependency/PostGresql/PostgreSQLDialect.class
+SitsFramework/Main.class
 SistemaAcademico/persistencia/json/FaseJSONDAO.class
 SistemaAcademico/classes/Professor.class
 SistemaAcademico/TesteConexao.class
+SitsFramework/api/OAMImageService$OAMImageMeta.class
 SQLFramework/DatabaseController/ForeignKey.class
 Generics/Exercicio3/Main.class
 SistemaAcademico/TestesInsercao.class
@@ -62,7 +66,9 @@ Generics/Exercicio3/Pedido.class
 SistemaAcademico/crud/FaseCRUD.class
 SistemaAcademico/persistencia/mysql/DisciplinaMySQLDAO.class
 SistemaAcademico/classes/Aluno.class
+SitsFramework/util/ImageDownloader.class
 SQLFramework/InjectionDependency/SQLDialect.class
+SitsFramework/api/OAMImageService.class
 Generics/Exercicio1/Pessoa.class
 SistemaAcademico/persistencia/json/MatriculaJSONDAO.class
 Generics/Exercicio4/ChaveValor.class

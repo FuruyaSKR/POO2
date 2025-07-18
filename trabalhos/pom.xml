@@ -32,7 +32,21 @@
     </build>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-imaging</artifactId>
+            <version>1.0-alpha3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.imagej</groupId>
+            <artifactId>ij</artifactId>
+            <version>1.54g</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230618</version>
+        </dependency>
         <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
