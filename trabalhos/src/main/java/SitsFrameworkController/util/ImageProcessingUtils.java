@@ -4,8 +4,19 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.WritableRaster;
 
+/**
+ * Classe utilitária para operações de processamento em imagens, incluindo
+ * conversão para cinza,
+ * binarização, detecção de bordas, negativo e realce de contraste.
+ */
 public class ImageProcessingUtils {
 
+    /**
+     * Converte uma imagem colorida para escala de cinza.
+     * 
+     * @param img Imagem de entrada.
+     * @return Imagem em escala de cinza.
+     */
     public static BufferedImage toGray(BufferedImage img) {
         BufferedImage gray = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         ColorConvertOp op = new ColorConvertOp(img.getColorModel().getColorSpace(),
@@ -14,6 +25,13 @@ public class ImageProcessingUtils {
         return gray;
     }
 
+    /**
+     * Realiza a binarização da imagem aplicando um limiar (threshold).
+     * 
+     * @param img       Imagem de entrada.
+     * @param threshold Limiar para binarização (0 a 255).
+     * @return Imagem binarizada.
+     */
     public static BufferedImage binarize(BufferedImage img, int threshold) {
         BufferedImage gray = toGray(img);
         WritableRaster raster = gray.getRaster();
@@ -29,6 +47,12 @@ public class ImageProcessingUtils {
         return gray;
     }
 
+    /**
+     * Aplica um filtro de detecção de bordas (Sobel) na imagem.
+     * 
+     * @param img Imagem de entrada.
+     * @return Imagem resultante com realce das bordas.
+     */
     public static BufferedImage edgeDetect(BufferedImage img) {
         BufferedImage gray = toGray(img);
         int w = gray.getWidth();
@@ -59,6 +83,12 @@ public class ImageProcessingUtils {
         return edge;
     }
 
+    /**
+     * Gera o negativo da imagem, invertendo os tons de cinza.
+     * 
+     * @param img Imagem de entrada.
+     * @return Imagem negativa.
+     */
     public static BufferedImage negativo(BufferedImage img) {
         BufferedImage out = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
         WritableRaster inRaster = toGray(img).getRaster();
@@ -75,6 +105,13 @@ public class ImageProcessingUtils {
         return out;
     }
 
+    /**
+     * Realça o contraste da imagem aplicando um estiramento linear dos valores de
+     * pixel.
+     * 
+     * @param img Imagem de entrada.
+     * @return Imagem com contraste realçado.
+     */
     public static BufferedImage contraste(BufferedImage img) {
         BufferedImage gray = toGray(img);
         WritableRaster raster = gray.getRaster();

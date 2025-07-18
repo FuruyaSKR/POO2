@@ -21,13 +21,32 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * Controlador responsável por interagir com a API de imagens de satélite e
+ * gerenciar
+ * operações de download e processamento local dos arquivos TIFF.
+ */
 public class ImageApiController {
+    /** Configuração utilizada para requisições e operações. */
     private Config config;
 
+    /**
+     * Construtor que inicializa o controlador com uma configuração específica.
+     * 
+     * @param config Configuração com área geográfica e diretório de saída.
+     */
     public ImageApiController(Config config) {
         this.config = config;
     }
 
+    /**
+     * Realiza o download de um arquivo a partir de uma URL e salva no destino
+     * informado.
+     * 
+     * @param fileUrl URL do arquivo a ser baixado.
+     * @param destino Caminho do arquivo de saída.
+     * @throws Exception Se houver falha no download ou escrita do arquivo.
+     */
     public void imageDownloader(String fileUrl, String destino) throws Exception {
         try (InputStream in = new URL(fileUrl).openStream();
                 FileOutputStream out = new FileOutputStream(destino)) {
@@ -39,6 +58,14 @@ public class ImageApiController {
         }
     }
 
+    /**
+     * Busca imagens disponíveis na API para a área definida na configuração.
+     * 
+     * @param quantidade Quantidade máxima de imagens a buscar.
+     * @return Lista de metadados das imagens encontradas.
+     * @throws IOException          Se houver erro de comunicação com a API.
+     * @throws InterruptedException Se a requisição for interrompida.
+     */
     public List<ImageTiffMeta> buscarImagens(int quantidade) throws IOException, InterruptedException {
         String url = String.format(Locale.US,
                 "https://api.openaerialmap.org/meta?bbox=%f,%f,%f,%f",
@@ -70,6 +97,12 @@ public class ImageApiController {
         return lista;
     }
 
+    /**
+     * Baixa uma lista de imagens e salva os arquivos no diretório configurado.
+     * 
+     * @param lista      Lista de metadados das imagens a serem baixadas.
+     * @param quantidade Quantidade máxima de imagens a baixar.
+     */
     public void baixarImagens(List<ImageTiffMeta> lista, int quantidade) {
         new File(config.OUTPUT_DIR).mkdirs();
         int count = 0;
@@ -92,6 +125,14 @@ public class ImageApiController {
         System.out.println("Download de imagens concluído.");
     }
 
+    /**
+     * Processa as imagens TIFF presentes no diretório de saída, aplicando o tipo de
+     * processamento informado.
+     * 
+     * @param tipo       Tipo de processamento a ser aplicado (ex: CINZA, BORDA,
+     *                   CONTRASTE).
+     * @param quantidade Quantidade máxima de imagens a processar.
+     */
     public void processarImagens(TipoProcessamento tipo, int quantidade) {
         java.io.File pasta = new java.io.File(config.OUTPUT_DIR);
         java.io.File[] arquivos = pasta.listFiles((dir, name) -> name.toLowerCase().endsWith(".tif"));
@@ -145,10 +186,20 @@ public class ImageApiController {
         System.out.println("Processamento de imagens concluído.");
     }
 
+    /**
+     * Retorna a configuração atualmente utilizada.
+     * 
+     * @return Objeto de configuração (Config).
+     */
     public Config getConfig() {
         return this.config;
     }
 
+    /**
+     * Atualiza a configuração utilizada pelo controlador.
+     * 
+     * @param config Nova configuração.
+     */
     public void setConfig(Config config) {
         this.config = config;
     }

@@ -20,11 +20,10 @@
         <version>3.2.2</version>
         <configuration>
             <includes>
-                <include>SQLFramework/DatabaseController/**</include>
-                <include>SQLFramework/InjectionDependency/**</include>
+                <include>SitsFrameworkController/**</include>
             </includes>
             <excludes>
-                <exclude>SQLFramework/Main.class</exclude>
+               <exclude>**/Main.class</exclude>
             </excludes>
         </configuration>
         </plugin>
